@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./compose/postgres:/docker-entrypoint-initdb.d:ro"
+      - "postgres-data-feature-search:/var/lib/postgresql/data:rw"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  typesense:
+    image: typesense/typesense:29.0
+    restart: on-failure
+    ports:
+      - "8108:8108"
+    volumes:
+      - ./typesense-data-feature-search:/data
+    command: '--data-dir /data --api-key=typesense_apikey --enable-cors'
+
+
+volumes: 
+  postgres-data-feature-search:
+  typesense-data-feature-search:
+      
