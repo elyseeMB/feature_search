@@ -35,6 +35,7 @@ export class TypesenceSearch implements SearchInterface {
     // console.log(res)
 
     const film = await Film.query().select().limit(2)
+
     console.log(film)
     const items = new SearchResult(Array.from({ length: 8 }))
     return items

@@ -4,7 +4,7 @@ import { inject } from '@adonisjs/core'
 
 export default class SearchesController {
   @inject()
-  async search({ request, response }: HttpContext, search: SearchInterface) {
+  async search({ request, response, inertia }: HttpContext, search: SearchInterface) {
     const q = request.qs().q ?? ''
 
     if (!q) {
@@ -13,6 +13,8 @@ export default class SearchesController {
 
     const result = await search.search(q)
 
-    return response.json(result)
+    return inertia.render('home', {
+      result,
+    })
   }
 }

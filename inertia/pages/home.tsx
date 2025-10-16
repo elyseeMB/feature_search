@@ -1,17 +1,25 @@
-import { Form } from '@inertiajs/react'
-import { Input } from '~/components/input.js'
+import { router } from '@inertiajs/react'
+import { FormEventHandler } from 'react'
+import { SearchForm } from '~/components/search-form.js'
 import Layout from '~/layout/layout.js'
 
-export default function Home() {
+export default function Home(props: any) {
+  console.log(props)
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault()
+    const data = Object.fromEntries(new FormData(e.currentTarget))
+    router.visit('/search', {
+      method: 'get',
+      data: { q: data.search },
+      preserveState: true,
+      preserveScroll: true,
+    })
+  }
+
   return (
     <>
       <Layout>
-        <div className="h-full flex items-center justify-center p-5">
-          <Form>
-            <Input />
-            <button>send</button>
-          </Form>
-        </div>
+        <SearchForm onSubmit={handleSubmit} className="p-4" />
       </Layout>
     </>
   )
