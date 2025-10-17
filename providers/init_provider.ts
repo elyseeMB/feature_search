@@ -1,7 +1,7 @@
 import type { ApplicationService } from '@adonisjs/core/types'
 import { SearchInterface } from '../src/infrastructures/Search/SearchInterface.js'
-import { TypesenceSearch } from '../src/infrastructures/Search/Typesense/TypesenceSearch.js'
-import { TypesenceClient } from '../src/infrastructures/Search/Typesense/TypesenceClient.js'
+import { TypesenseSearch } from '../src/infrastructures/Search/Typesense/TypesenseSearch.js'
+import { TypesenseClient } from '../src/infrastructures/Search/Typesense/TypesenseClient.js'
 import env from '#start/env'
 
 export default class InitProvider {
@@ -11,10 +11,10 @@ export default class InitProvider {
    * Register bindings to the container
    */
   register() {
-    this.app.container.bind(TypesenceClient, () => {
+    this.app.container.bind(TypesenseClient, () => {
       const host = env.get('TYPESENSE_HOST')
       const apikey = env.get('TYPESENSE_KEY')
-      return new TypesenceClient(host, apikey)
+      return new TypesenseClient(host, apikey)
     })
   }
 
@@ -23,7 +23,7 @@ export default class InitProvider {
    */
   async boot() {
     this.app.container.bind(SearchInterface, () => {
-      return this.app.container.make(TypesenceSearch)
+      return this.app.container.make(TypesenseSearch)
     })
   }
 }

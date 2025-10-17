@@ -1,14 +1,17 @@
 import { inject } from '@adonisjs/core'
 import { SearchInterface } from '../SearchInterface.js'
 import { SearchResult } from '../SearchResult.js'
-import { TypesenceClient } from './TypesenceClient.js'
+import { TypesenseClient } from './TypesenseClient.js'
 import Film from '#models/film'
+import { TypesenseItem } from './TypesenseItem.js'
 
 @inject()
-export class TypesenceSearch implements SearchInterface {
-  constructor(private readonly client: TypesenceClient) {}
+export class TypesenseSearch implements SearchInterface {
+  constructor(private readonly client: TypesenseClient) {}
 
   async search(q: string): Promise<SearchResult> {
+    console.log(q)
+
     const bookShema = {
       name: 'books',
       fields: [
@@ -23,21 +26,25 @@ export class TypesenceSearch implements SearchInterface {
     }
 
     const doc = {
-      title: 'matrix3',
-      authors: ['johnDoe_matrix', 'janeDoe'],
-      publication_year: 2026,
+      title: 'apple',
+      authors: ['apple', 'apple'],
+      publication_year: 2020,
       ratings_count: 344,
       average_rating: 200,
-      categories: ['science'],
+      categories: ['tech'],
     }
 
-    // const res = await this.client.get('/collections/books/documents/1')
-    // console.log(res)
+    // const resDocuments = await this.client.post(`/collections/books/documents`, doc)
 
-    const film = await Film.query().select().limit(2)
+    const { found, hits: items } = await this.client.get(
+      `/collections/books/documents/search?q=${q}&query_by=title`
+    )
 
-    console.log(film)
-    const items = new SearchResult(Array.from({ length: 8 }))
-    return items
+    // const film = await Film.query().select().limit(2)
+
+    return new SearchResult(
+      items.map((item) => new TypesenseItem(item)),
+      found
+    )
   }
 }

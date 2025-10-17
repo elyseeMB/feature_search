@@ -14,7 +14,9 @@ export default class SearchesController {
     const result = await search.search(q)
 
     return inertia.render('home', {
-      result,
+      q,
+      result: result.getItems(),
+      total: result.getTotal(),
     })
   }
 }

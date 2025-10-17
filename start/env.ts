@@ -38,7 +38,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
-  | Variables for configuring typesence
+  | Variables for configuring typesense
   |----------------------------------------------------------
   */
   TYPESENSE_KEY: Env.schema.string(),
