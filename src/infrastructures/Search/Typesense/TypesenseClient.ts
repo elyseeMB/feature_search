@@ -70,22 +70,33 @@ export class TypesenseClient {
     return await this.api<SearchResponse>(enpoint, undefined, 'GET')
   }
 
-  async post(enpoint: string, data: Record<string, any> | undefined) {
+  async post(
+    enpoint: string,
+    data: Record<string, any> | string | undefined,
+    options?: RequestInit
+  ) {
     if (!data) {
       return
     }
-    return await this.api(enpoint, data)
+    return await this.api(enpoint, data, 'POST', options)
+  }
+
+  async patch(enpoint: string, data: Record<string, any>[]) {
+    return this.api(enpoint, data, 'PATCH')
   }
 
   async api<T>(
     enpoint: string,
-    data: Record<string, any> | undefined = undefined,
-    method: string | undefined = 'POST'
+    data: Record<string, any> | string | undefined = undefined,
+    method: string | undefined = 'POST',
+    options: RequestInit = {}
   ): Promise<T> {
     const response = await fetch(`http://${this.host}${enpoint}`, {
       method: method ? method : undefined,
-      body: data ? JSON.stringify(data) : undefined,
+      body: typeof data === 'string' ? data : data ? JSON.stringify(data) : undefined,
+      ...options,
       headers: {
+        ...options.headers,
         'Content-Type': 'application/json',
         'X-TYPESENSE-API-KEY': this.apikey,
       },
@@ -93,6 +104,7 @@ export class TypesenseClient {
     if (response.ok) {
       return await (response.json() as Promise<T>)
     }
-    throw new TypesenseException(response)
+    return (await response.json()) as Promise<T>
+    // throw new TypesenseException(response)
   }
 }

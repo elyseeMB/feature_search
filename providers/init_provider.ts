@@ -3,6 +3,8 @@ import { SearchInterface } from '../src/infrastructures/Search/SearchInterface.j
 import { TypesenseSearch } from '../src/infrastructures/Search/Typesense/TypesenseSearch.js'
 import { TypesenseClient } from '../src/infrastructures/Search/Typesense/TypesenseClient.js'
 import env from '#start/env'
+import { IndexerInterface } from '#src/infrastructures/Search/IndexerInterface'
+import { TypesenseIndexer } from '#src/infrastructures/Search/Typesense/TypesenseIndexer'
 
 export default class InitProvider {
   constructor(protected app: ApplicationService) {}
@@ -24,6 +26,10 @@ export default class InitProvider {
   async boot() {
     this.app.container.bind(SearchInterface, () => {
       return this.app.container.make(TypesenseSearch)
+    })
+
+    this.app.container.bind(IndexerInterface, () => {
+      return this.app.container.make(TypesenseIndexer)
     })
   }
 }
