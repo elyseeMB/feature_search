@@ -4,16 +4,25 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from '~/components/ui/breadcrumb.js'
 import { Separator } from '~/components/ui/separator.js'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar.js'
 import { Head } from '@inertiajs/react'
-import { PropsWithChildren } from 'react'
+import { FC, Fragment, PropsWithChildren, ReactNode } from 'react'
 import { ThemeProvider } from '~/components/theme-provider.js'
 
-export default function Layout({ children }: PropsWithChildren) {
+export type BreadcrumbItem = {
+  title: string
+  href: string
+}
+
+const Layout = ({
+  children,
+  breadcrumbs,
+}: PropsWithChildren<{
+  breadcrumbs: BreadcrumbItem[]
+}>) => {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -31,13 +40,18 @@ export default function Layout({ children }: PropsWithChildren) {
                   />
                   <Breadcrumb>
                     <BreadcrumbList>
-                      <BreadcrumbItem className="hidden md:block">
-                        <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator className="hidden md:block" />
-                      <BreadcrumbItem>
-                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                      </BreadcrumbItem>
+                      {breadcrumbs.map((item, index) => (
+                        <Fragment key={index}>
+                          <BreadcrumbItem className="hidden md:block">
+                            <BreadcrumbLink href={item.href}>{item.title} </BreadcrumbLink>
+                          </BreadcrumbItem>
+                          {breadcrumbs.length - 1 === index ? (
+                            <></>
+                          ) : (
+                            <BreadcrumbSeparator className="hidden md:block" />
+                          )}
+                        </Fragment>
+                      ))}
                     </BreadcrumbList>
                   </Breadcrumb>
                 </header>
@@ -50,3 +64,11 @@ export default function Layout({ children }: PropsWithChildren) {
     </>
   )
 }
+
+export function withAppLayout<T>(breadcrumb: BreadcrumbItem[], component: FC<T>) {
+  //@ts-ignore
+  component.layout = (page: ReactNode) => <Layout breadcrumbs={breadcrumb}> {page} </Layout>
+  return component
+}
+
+export default Layout

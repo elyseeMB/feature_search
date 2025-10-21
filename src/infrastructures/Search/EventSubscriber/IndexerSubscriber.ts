@@ -1,17 +1,21 @@
 import { inject } from '@adonisjs/core'
 import { IndexerInterface } from '../IndexerInterface.js'
+import { ContentCreatedEvent } from '#src/domain/application/event/ContentCreatedEvent'
 
-export class IndexerSubscriber {
-  constructor(public model: any) {}
-
+export default class IndexerSubscriber {
   @inject()
-  handle(indexer: IndexerInterface) {
-    return indexer.index(this.model)
+  handle(event: ContentCreatedEvent, indexer: IndexerInterface) {
+    console.log('event indexer', event)
+    return
+    return indexer.index(event.getContent())
   }
 
-  static register(model: any) {
-    return new IndexerSubscriber(model)
-  }
+  // constructor(public model: any) {}
+  // @inject()
+  // handle(indexer: IndexerInterface) {
+  //   return indexer.index(this.model)
+  // }
+  // static register(model: any) {
+  //   return new IndexerSubscriber(model)
+  // }
 }
-
-// const a = new IndexerSubscriber()

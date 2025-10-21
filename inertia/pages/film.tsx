@@ -3,18 +3,12 @@ import { BreadcrumbItem, withAppLayout } from '~/layout/layout.js'
 
 const breadcrumbItem: BreadcrumbItem[] = [
   {
-    title: 'Building Your Application',
-    href: '#',
-  },
-  {
-    title: 'test',
+    title: 'Film',
     href: '#',
   },
 ]
 
 export default withAppLayout(breadcrumbItem, (props: any) => {
-  console.log(props)
-
   return (
     <>
       <SearchForm className="p-4" value={props.q} />

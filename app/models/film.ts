@@ -1,14 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import Content from '#src/domain/application/entity/Content'
 
-export default class Film extends BaseModel {
+export default class Film extends Content {
   static table = 'films'
-
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
 
   @column()
   declare tconst: string
@@ -36,7 +31,4 @@ export default class Film extends BaseModel {
 
   @column()
   declare genres: string
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 }

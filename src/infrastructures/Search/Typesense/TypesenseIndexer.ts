@@ -17,13 +17,6 @@ export class TypesenseIndexer implements IndexerInterface {
 
   async index(data: Film[]): Promise<void> {
     const doc = data.map((item) => ({
-      // { name: 'title', type: 'string' },
-      // { name: 'authors', type: 'string[]' },
-      // { name: 'publication_year', type: 'int32', sort: true },
-      // { name: 'ratings_count', type: 'int32', facet: true },
-      // { name: 'average_rating', type: 'float', facet: true },
-      // { name: 'categories', type: 'string[]', facet: true },
-
       id: item.id.toString(),
       title: item.primary_title,
       authors: ['apple', 'apple'],
