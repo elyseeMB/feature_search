@@ -5,8 +5,6 @@ import { ContentCreatedEvent } from '#src/domain/application/event/ContentCreate
 export default class IndexerSubscriber {
   @inject()
   handle(event: ContentCreatedEvent, indexer: IndexerInterface) {
-    console.log('event indexer', event)
-    return
     return indexer.index(event.getContent())
   }
 

@@ -14,4 +14,7 @@ const HomeController = () => import('#controllers/home_controller')
 
 router.get('/', [HomeController]).as('home')
 router.get('/search', [SearchesController, 'search'])
-router.get('/film', [FilmsController, 'index']).as('index')
+
+// FILM
+router.get('/film', [FilmsController, 'index']).as('film.index')
+router.get('/film/:id', [FilmsController, 'edit']).as('film.edit')

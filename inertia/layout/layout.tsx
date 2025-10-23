@@ -8,7 +8,7 @@ import {
 } from '~/components/ui/breadcrumb.js'
 import { Separator } from '~/components/ui/separator.js'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar.js'
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import { FC, Fragment, PropsWithChildren, ReactNode } from 'react'
 import { ThemeProvider } from '~/components/theme-provider.js'
 
@@ -43,7 +43,7 @@ const Layout = ({
                       {breadcrumbs.map((item, index) => (
                         <Fragment key={index}>
                           <BreadcrumbItem className="hidden md:block">
-                            <BreadcrumbLink href={item.href}>{item.title} </BreadcrumbLink>
+                            <Link href={item.href}>{item.title}</Link>
                           </BreadcrumbItem>
                           {breadcrumbs.length - 1 === index ? (
                             <></>
