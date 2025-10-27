@@ -1,12 +1,10 @@
-import { CrudController } from '#src/http/admin/controller/crud_controller'
+import { BaseAction } from '#src/infrastructures/orm/actions/base_action'
 import Film from '#models/film'
 
-export default class GetFilmsPaginated extends CrudController {
+export default class GetFilmsPaginated extends BaseAction {
   protected entity = Film
-  protected composantRender: string = 'film'
 
-  async asController() {
-    const query = await this.entity.builder().query.paginate(1, 20)
-    return this.crudIndex(query)
+  async handle() {
+    return await this.entity.builder().query.paginate(1, 20)
   }
 }

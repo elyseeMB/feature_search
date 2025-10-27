@@ -14,8 +14,7 @@ export default class FilmsController extends CrudController {
   }
 
   async index() {
-    const query = await this.entity.query().select().paginate(1, 20)
-
+    const query = await this.entity.builder().query.paginate(1, 20)
     return this.crudIndex(query)
   }
 

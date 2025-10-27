@@ -1,8 +1,11 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import Content from '#src/domain/application/entity/Content'
+import { FilmBuilder } from '#src/domain/film/builder/film_builder'
 
 export default class Film extends Content {
+  static builder = () => FilmBuilder.new()
+
   static table = 'films'
 
   @column()
