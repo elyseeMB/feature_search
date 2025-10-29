@@ -11,6 +11,7 @@ const RenderFilmsIndex = () => import('#src/http/admin/film/actions/render/rende
 
 const FilmsController = () => import('#src/http/admin/controller/films_controller')
 import router from '@adonisjs/core/services/router'
+const RenderFilmShow = () => import('#src/http/admin/film/actions/render/render_films_show')
 const SearchesController = () => import('#controllers/searches_controller')
 const HomeController = () => import('#controllers/home_controller')
 
@@ -21,4 +22,4 @@ router.get('/search', [SearchesController, 'search'])
 
 // FILM
 router.get('/film', [RenderFilmsIndex]).as('film.index')
-router.get('/film/:id', [FilmsController, 'edit']).as('film.edit')
+router.get('/film/:id', [RenderFilmShow]).as('film.edit')

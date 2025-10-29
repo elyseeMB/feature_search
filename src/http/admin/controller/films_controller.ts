@@ -20,7 +20,6 @@ export default class FilmsController extends CrudController {
 
   async edit({ params }: HttpContext) {
     const id = params.id
-    console.log(id)
 
     const data = await this.entity.findByOrFail('id', id)
 
