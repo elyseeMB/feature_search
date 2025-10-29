@@ -6,20 +6,15 @@
 | The router file is used for defining the HTTP router.
 |
 */
-import '#start/router/actions'
-const RenderFilmsIndex = () => import('#src/http/admin/film/actions/render/render_films_index')
+import router from '@adonisjs/core/services/router'
 
 const FilmsController = () => import('#src/http/admin/controller/films_controller')
-import router from '@adonisjs/core/services/router'
-const RenderFilmShow = () => import('#src/http/admin/film/actions/render/render_films_show')
 const SearchesController = () => import('#controllers/searches_controller')
 const HomeController = () => import('#controllers/home_controller')
-
-router.useActionHandlers()
 
 router.get('/', [HomeController]).as('home')
 router.get('/search', [SearchesController, 'search'])
 
 // FILM
-router.get('/film', [RenderFilmsIndex]).as('film.index')
-router.get('/film/:id', [RenderFilmShow]).as('film.edit')
+router.get('/film', [FilmsController, 'index']).as('film.index')
+router.get('/film/:id', [FilmsController, 'edit']).as('film.edit')

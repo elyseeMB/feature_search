@@ -5,10 +5,9 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import emitter from '@adonisjs/core/services/emitter'
 import { LucidModel } from '@adonisjs/lucid/types/model'
-import { BaseAction } from '#src/infrastructures/orm/actions/base_action'
 
 @inject()
-export abstract class CrudController extends BaseAction {
+export abstract class CrudController {
   protected entity: LucidModel = Content
   protected composantRender: string = 'blog'
   protected events: EventMap<{
@@ -17,9 +16,7 @@ export abstract class CrudController extends BaseAction {
     'user:registered': undefined,
   }
 
-  constructor(private readonly ctx: HttpContext) {
-    super()
-  }
+  constructor(private readonly ctx: HttpContext) {}
 
   crudIndex(query: any) {
     if (this.events['user:registered']) {
