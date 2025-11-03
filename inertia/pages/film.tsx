@@ -10,8 +10,6 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'
-import { Button } from '~/components/ui/button'
-import { Skeleton } from '~/components/ui/skeleton'
 import { BreadcrumbItem, withAppLayout } from '~/layout/layout.js'
 import {
   Table,
@@ -28,6 +26,7 @@ import { SkeletonTable } from '~/components/ui/table/skeleton-table.js'
 import { Link, usePage } from '@inertiajs/react'
 import { Route } from '@adonisjs/core/http'
 import env from '#start/env'
+import { ActionTable } from '~/components/ui/table/action-table'
 
 export type Film = {
   id: number
@@ -88,6 +87,8 @@ export default withAppLayout(breadcrumbItem, ({ ...props }) => {
 
   return (
     <div className="w-full">
+      <ActionTable />
+
       <HeaderTable table={table} meta={meta} />
       <div className="px-4">
         <div className="overflow-hidden rounded-md border">

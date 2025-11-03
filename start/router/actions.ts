@@ -1,7 +1,6 @@
 import { Router } from '@adonisjs/core/http'
 import type { Constructor, LazyImport } from '@adonisjs/http-server/build/src/types/base.js'
 import type { GetControllerHandlers, RouteFn } from '@adonisjs/http-server/build/src/types/route.js'
-import { Route } from '@adonisjs/http-server/build/src/router/route.js'
 import { BaseAction } from '#src/infrastructures/orm/actions/base_action'
 
 declare module '@adonisjs/core/http' {

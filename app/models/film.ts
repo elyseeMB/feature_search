@@ -1,5 +1,4 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { column } from '@adonisjs/lucid/orm'
 import Content from '#src/domain/application/entity/Content'
 import { FilmBuilder } from '#src/domain/film/builder/film_builder'
 

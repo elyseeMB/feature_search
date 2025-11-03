@@ -18,11 +18,14 @@ export default class FilmsController extends CrudController {
     return this.crudIndex(query)
   }
 
+  create() {
+    console.log('called film controller create')
+    return this.crudNew()
+  }
+
   async edit({ params }: HttpContext) {
     const id = params.id
-
     const data = await this.entity.findByOrFail('id', id)
-
     return this.crudEdit(data)
   }
 }

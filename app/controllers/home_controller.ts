@@ -1,10 +1,6 @@
-import Film from '#models/film'
-import { ContentCreatedEvent } from '#src/domain/application/event/ContentCreatedEvent'
 import type { HttpContext } from '@adonisjs/core/http'
-import emitter from '@adonisjs/core/services/emitter'
-import { BaseAction } from '#src/infrastructures/orm/actions/base_action'
 
-export default class HomeController extends BaseAction {
+export default class HomeController {
   async handle({ inertia }: HttpContext) {
     // const film = await Film.createMany([
     //   {
@@ -31,11 +27,6 @@ export default class HomeController extends BaseAction {
     //   },
     // ])
     // emitter.emit('user:registered', new ContentCreatedEvent(film))
-
-    return inertia.render('home')
-  }
-
-  asController({ inertia }: HttpContext) {
     return inertia.render('home')
   }
 }

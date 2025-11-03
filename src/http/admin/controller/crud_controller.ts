@@ -18,9 +18,9 @@ export abstract class CrudController {
 
   constructor(private readonly ctx: HttpContext) {}
 
-  crudIndex(query: any) {
+  async crudIndex(query: any) {
     if (this.events['user:registered']) {
-      emitter.emit('user:registered', new this.events['user:registered'](query))
+      await emitter.emit('user:registered', new this.events['user:registered'](query))
     }
 
     return this.ctx.inertia.render(this.composantRender, {
@@ -29,6 +29,11 @@ export abstract class CrudController {
   }
 
   crudEdit(data: Content) {
-    return this.ctx.inertia.render('film/edit', { data })
+    return this.ctx.inertia.render(`${this.composantRender}/edit`, { data })
+  }
+
+  crudNew() {
+    console.log('called crud New')
+    return this.ctx.inertia.render(`${this.composantRender}/create`)
   }
 }
