@@ -1,4 +1,6 @@
 import('#src/infrastructures/Search/EventSubscriber/IndexerSubscriber')
+import { UserCreatedEvent } from '#src/domain/auth/event/user_created_event'
+import { AuthSubscriber } from '#src/domain/auth/subscriber/auth_subscriber'
 import emitter from '@adonisjs/core/services/emitter'
 import { ContentCreatedEvent } from 'src/domain/application/event/ContentCreatedEvent.js'
 
@@ -10,6 +12,7 @@ export type EventMap<T extends Record<string, Constructor>> = {
 
 declare module '@adonisjs/core/types' {
   interface EventsList {
+    'UserCreatedEvent': UserCreatedEvent
     'user:registered': ContentCreatedEvent
   }
 }

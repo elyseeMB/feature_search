@@ -1,20 +1,22 @@
-import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { column } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import Content from '#src/domain/application/entity/Content'
+import { HttpContext } from '@adonisjs/core/http'
+import { Authenticator } from '@adonisjs/auth'
+import { Authenticators } from '@adonisjs/auth/types'
+import { Infer } from '@vinejs/vine/types'
+import AuthController from '#src/http/auth_controller'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
 
-export default class User extends compose(BaseModel, AuthFinder) {
-  @column({ isPrimary: true })
-  declare id: number
-
+export default class User extends compose(Content, AuthFinder) {
   @column()
-  declare fullName: string | null
+  declare fullname: string | null
 
   @column()
   declare email: string
@@ -22,9 +24,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  static async register(
+    auth: Authenticator<Authenticators>,
+    data: Infer<ReturnType<typeof AuthController.validator>>
+  ) {
+    const user = await this.create(data)
+    await auth.use('web').login(user)
+    return user
+  }
 }

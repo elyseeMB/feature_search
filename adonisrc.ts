@@ -60,6 +60,7 @@ export default defineConfig({
     () => import('#providers/search_provider'),
     () => import('#providers/base_provider'),
     () => import('@tuyau/core/tuyau_provider'),
+    () => import('@adonisjs/transmit/transmit_provider')
   ],
 
   /*
@@ -74,6 +75,7 @@ export default defineConfig({
     () => import('#start/routes'),
     () => import('#start/kernel'),
     () => import('#start/events'),
+    () => import('#src/domain/auth/subscriber/auth_subscriber'),
   ],
 
   /*
